@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Booth Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">Event Booth Manager</div>
+    <div class="content">
+      <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="#">Home</a>
+        <a href="#">Add Booth</a>
+      </div>
+      <div class="main">
+        <h1>Booth List</h1>
+
+        <form id="boothForm">
+          <input type="text" id="booth" placeholder="Booth (e.g. A)" required />
+          <input type="text" id="size" placeholder="Size (e.g. 3x3)" required />
+          <input type="text" id="event" placeholder="Event Name" required />
+          <input type="date" id="date" required />
+          <input type="number" id="cost" placeholder="Cost" required />
+          <input type="number" id="budget" placeholder="Budget" required />
+          <input type="text" id="contact" placeholder="Contact Person" required />
+          <input type="text" id="backdrop" placeholder="Backdrop Cost" />
+          <button type="submit" class="btn">Add Booth</button>
+        </form>
+
+        <label for="filterEvent">Filter by Event:</label>
+        <select id="filterEvent">
+          <option value="">All</option>
+          <option value="Food Fair">Food Fair</option>
+          <option value="Craft Market">Craft Market</option>
+          <option value="Tech Expo">Tech Expo</option>
+        </select>
+
+        <table id="boothTable">
+          <thead>
+            <tr>
+              <th>Booth</th>
+              <th>Size</th>
+              <th>Event Name</th>
+              <th>Date</th>
+              <th>Cost</th>
+              <th>Budget</th>
+              <th>Contact</th>
+              <th>Backdrop</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A</td>
+              <td>3x3</td>
+              <td>Food Fair</td>
+              <td>2024-04-22</td>
+              <td>3000</td>
+              <td>4000</td>
+              <td>Ibu A</td>
+              <td>500 rb</td>
+              <td><button class="btn edit">Edit</button> <button class="btn delete">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -10,25 +10,29 @@ boothForm.addEventListener('submit', function (e) {
   const booth = document.getElementById('booth').value;
   const size = document.getElementById('size').value;
   const event = document.getElementById('event').value;
-  const date = document.getElementById('date').value;
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
   const cost = document.getElementById('cost').value;
   const budget = document.getElementById('budget').value;
   const contact = document.getElementById('contact').value;
   const backdrop = document.getElementById('backdrop').value;
+  const backdropSize = document.getElementById('backdropSize').value;
 
   // Membuat baris baru di tabel
   const newRow = boothTable.insertRow();
   newRow.insertCell(0).textContent = booth;
   newRow.insertCell(1).textContent = size;
   newRow.insertCell(2).textContent = event;
-  newRow.insertCell(3).textContent = date;
-  newRow.insertCell(4).textContent = cost;
-  newRow.insertCell(5).textContent = budget;
-  newRow.insertCell(6).textContent = contact;
-  newRow.insertCell(7).textContent = backdrop;
+  newRow.insertCell(3).textContent = startDate;
+  newRow.insertCell(4).textContent = endDate;
+  newRow.insertCell(5).textContent = cost;
+  newRow.insertCell(6).textContent = budget;
+  newRow.insertCell(7).textContent = contact;
+  newRow.insertCell(8).textContent = backdrop;
+  newRow.insertCell(9).textContent = backdropSize;
 
   // Tombol Edit dan Remove
-  const actionsCell = newRow.insertCell(8);
+  const actionsCell = newRow.insertCell(10);
   actionsCell.innerHTML = `
     <button class="btn edit">Edit</button> 
     <button class="btn delete">Remove</button>
@@ -56,11 +60,13 @@ boothTable.addEventListener('click', function (e) {
     document.getElementById('booth').value = cells[0].textContent;
     document.getElementById('size').value = cells[1].textContent;
     document.getElementById('event').value = cells[2].textContent;
-    document.getElementById('date').value = cells[3].textContent;
-    document.getElementById('cost').value = cells[4].textContent;
-    document.getElementById('budget').value = cells[5].textContent;
-    document.getElementById('contact').value = cells[6].textContent;
-    document.getElementById('backdrop').value = cells[7].textContent;
+    document.getElementById('startDate').value = cells[3].textContent;
+    document.getElementById('endDate').value = cells[4].textContent;
+    document.getElementById('cost').value = cells[5].textContent;
+    document.getElementById('budget').value = cells[6].textContent;
+    document.getElementById('contact').value = cells[7].textContent;
+    document.getElementById('backdrop').value = cells[8].textContent;
+    document.getElementById('backdropSize').value = cells[9].textContent;
 
     // Menghapus baris lama setelah edit
     boothTable.deleteRow(row.rowIndex);

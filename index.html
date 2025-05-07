@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Event Booth Manager</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
@@ -17,18 +17,16 @@
       </div>
       <div class="main">
         <h1>Booth List</h1>
-
         <form id="boothForm">
           <input type="text" id="booth" placeholder="Booth (e.g. A)" required />
           <input type="text" id="size" placeholder="Size (e.g. 3x3)" required />
           <input type="text" id="event" placeholder="Event Name" required />
-          <input type="date" id="startDate" required />
-          <input type="date" id="endDate" required />
+          <input type="date" id="date" required />
           <input type="number" id="cost" placeholder="Cost" required />
           <input type="number" id="budget" placeholder="Budget" required />
           <input type="text" id="contact" placeholder="Contact Person" required />
           <input type="text" id="backdrop" placeholder="Backdrop Cost" />
-          <input type="text" id="backdropSize" placeholder="Backdrop Size" required />
+          <input type="text" id="notes" placeholder="Keterangan" />
           <button type="submit" class="btn">Add Booth</button>
         </form>
 
@@ -46,36 +44,19 @@
               <th>Booth</th>
               <th>Size</th>
               <th>Event Name</th>
-              <th>Start Date</th>
-              <th>End Date</th>
+              <th>Date</th>
               <th>Cost</th>
               <th>Budget</th>
               <th>Contact</th>
               <th>Backdrop</th>
-              <th>Backdrop Size</th>
-              <th>Actions</th>
+              <th>Keterangan</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>A</td>
-              <td>3x3</td>
-              <td>Food Fair</td>
-              <td>2024-04-22</td>
-              <td>2024-04-24</td>
-              <td>3000</td>
-              <td>4000</td>
-              <td>Ibu A</td>
-              <td>500 rb</td>
-              <td>2x3</td>
-              <td><button class="btn edit">Edit</button> <button class="btn delete">Remove</button></td>
-            </tr>
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

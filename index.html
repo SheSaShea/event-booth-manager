@@ -32,11 +32,8 @@
 
         <label for="filterEvent">Filter by Event:</label>
         <select id="filterEvent">
-          <option value="">All</option>
-          <option value="Food Fair">Food Fair</option>
-          <option value="Craft Market">Craft Market</option>
-          <option value="Tech Expo">Tech Expo</option>
-        </select>
+          <option value="">-- Filter by Event --</option>
+        </select>        
 
         <table id="boothTable">
           <thead>
@@ -54,6 +51,9 @@
           </thead>
           <tbody></tbody>
         </table>
+        <button id="clearData" style="margin-top: 16px; background-color: #dc3545; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">
+          Hapus Semua Data
+        </button>        
       </div>
     </div>
   </div>

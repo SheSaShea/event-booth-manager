@@ -21,15 +21,27 @@ document.getElementById("boothForm").addEventListener("submit", function (e) {
   const booth = document.getElementById("booth").value;
   const size = document.getElementById("size").value;
   const event = document.getElementById("event").value;
-  const date = document.getElementById("date").value;
+  const startDate = document.getElementById("startDate").value;
+  const endDate = document.getElementById("endDate").value;
   const cost = costInput.value;
   const budget = budgetInput.value;
   const contact = document.getElementById("contact").value;
   const backdrop = backdropInput.value;
   const notes = document.getElementById("notes").value;
 
-  const data = { booth, size, event, date, cost, budget, contact, backdrop, notes };
-
+  const data = {
+    booth,
+    size,
+    event,
+    startDate,
+    endDate,
+    cost,
+    budget,
+    contact,
+    backdrop,
+    notes
+  };
+  
   // Simpan ke localStorage
   const boothList = JSON.parse(localStorage.getItem("booths")) || [];
   boothList.push(data);
@@ -42,7 +54,19 @@ document.getElementById("boothForm").addEventListener("submit", function (e) {
 function appendRowToTable(data) {
     const table = document.getElementById("boothTable").getElementsByTagName("tbody")[0];
     const newRow = table.insertRow();
-    Object.values(data).forEach(value => {
+  
+    [
+      data.booth,
+      data.size,
+      data.event,
+      data.startDate,
+      data.endDate,
+      data.cost,
+      data.budget,
+      data.contact,
+      data.backdrop,
+      data.notes
+    ].forEach(value => {
       const cell = newRow.insertCell();
       cell.textContent = value;
     });

@@ -2,63 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Event Booth Manager</title>
+  <title>Booth Manager</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <div class="header">Event Booth Manager</div>
-    <div class="content">
-      <div class="sidebar">
-        <h2>Menu</h2>
-        <a href="#">Home</a>
-        <a href="#">Add Booth</a>
-      </div>
-      <div class="main">
-        <h1>Booth List</h1>
-        <form id="boothForm">
-          <input type="text" id="booth" placeholder="Booth (e.g. A)" required />
-          <input type="text" id="size" placeholder="Size (e.g. 3x3)" required />
-          <input type="text" id="event" placeholder="Event Name" required />
-          <input type="date" id="startDate" required />
-          <input type="date" id="endDate" required />          
-          <input type="text" id="cost" placeholder="Cost" required />
-          <input type="text" id="budget" placeholder="Budget" required />          
-          <input type="text" id="contact" placeholder="Contact Person" required />
-          <input type="text" id="backdrop" placeholder="Backdrop Cost" />
-          <input type="text" id="notes" placeholder="Keterangan" />
-          <button type="submit" class="btn">Add Booth</button>
-        </form>
+  <h1>Booth Manager</h1>
 
-        <label for="filterEvent">Filter by Event:</label>
-        <select id="filterEvent">
-          <option value="">-- Filter by Event --</option>
-        </select>             
+  <form id="boothForm">
+    <input type="text" id="booth" name="booth" placeholder="Booth" required />
+    <select id="boothType" name="boothType" required>
+      <option value="">Pilih Booth Type</option>
+      <option value="Rutin">Rutin</option>
+      <option value="Paylater">Paylater</option>
+      <option value="Lain-lain">Lain-lain</option>
+    </select>
+    <input type="text" id="boothSize" name="boothSize" placeholder="Booth Size" required />
+    <input type="text" id="eventName" name="eventName" placeholder="Event Name" required />
+    <input type="date" id="startDate" name="startDate" required />
+    <input type="date" id="endDate" name="endDate" required />
+    <input type="number" id="cost" name="cost" placeholder="Cost (Rp)" required />
+    <input type="number" id="budget" name="budget" placeholder="Budget (Rp)" />
+    <input type="number" id="otherExpenses" name="otherExpenses" placeholder="Other Expenses (Rp)" />
+    <input type="text" id="backdropSize" name="backdropSize" placeholder="Backdrop Size" />
+    <input type="number" id="backdropCost" name="backdropCost" placeholder="Backdrop Cost (Rp)" />
+    <input type="text" id="contact" name="contact" placeholder="Contact" />
+    <textarea id="description" name="description" placeholder="Description"></textarea>
+    <button type="submit">Save Booth</button>
+  </form>
 
-        <table id="boothTable">
-          <thead>
-            <tr>
-              <th>Booth</th>
-              <th>Size</th>
-              <th>Event Name</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Cost</th>
-              <th>Budget</th>
-              <th>Contact</th>
-              <th>Backdrop</th>
-              <th>Keterangan</th>
-            </tr>
-          </thead>          
-          <tbody></tbody>
-        </table>
-        <button id="clearData" style="margin-top: 16px; background-color: #dc3545; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">
-          Hapus Semua Data
-        </button>        
-      </div>
-    </div>
-  </div>
+  <hr />
+
+  <label for="eventFilter">Filter by Event:</label>
+  <select id="eventFilter">
+    <option value="">Semua Event</option>
+  </select>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Booth</th>
+        <th>Type</th>
+        <th>Size</th>
+        <th>Event</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Cost</th>
+        <th>Budget</th>
+        <th>Other</th>
+        <th>Backdrop Size</th>
+        <th>Backdrop Cost</th>
+        <th>Contact</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="boothTable"></tbody>
+  </table>
+
   <script src="script.js"></script>
 </body>
 </html>

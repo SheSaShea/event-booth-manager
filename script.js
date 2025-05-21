@@ -1,120 +1,124 @@
-const costInput = document.getElementById("cost");
-const budgetInput = document.getElementById("budget");
-const backdropInput = document.getElementById("backdrop");
+let booths = JSON.parse(localStorage.getItem('booths')) || [];
+let editingIndex = null;
 
-// Format Rupiah real-time saat mengetik
-[costInput, budgetInput, backdropInput].forEach(input => {
-  input.addEventListener("input", function () {
-    let clean = this.value.replace(/[^\d]/g, "");
-    if (!clean) {
-      this.value = "";
-      return;
-    }
-    const formatted = parseInt(clean).toLocaleString("id-ID") + ",-";
-    this.value = formatted;
-  });
-});
+const form = document.getElementById('boothForm');
+const tableBody = document.getElementById('boothTable');
+const eventFilter = document.getElementById('eventFilter');
 
-document.getElementById("boothForm").addEventListener("submit", function (e) {
+form.addEventListener('submit', e => {
   e.preventDefault();
 
-  const booth = document.getElementById("booth").value;
-  const size = document.getElementById("size").value;
-  const event = document.getElementById("event").value;
-  const startDate = document.getElementById("startDate").value;
-  const endDate = document.getElementById("endDate").value;
-  const cost = costInput.value;
-  const budget = budgetInput.value;
-  const contact = document.getElementById("contact").value;
-  const backdrop = backdropInput.value;
-  const notes = document.getElementById("notes").value;
+  console.log('Form submitted!');
 
   const data = {
-    booth,
-    size,
-    event,
-    startDate,
-    endDate,
-    cost,
-    budget,
-    contact,
-    backdrop,
-    notes
+    booth: form.booth.value.trim(),
+    boothType: form.boothType.value,
+    boothSize: form.boothSize.value.trim(),
+    eventName: form.eventName.value.trim(),
+    startDate: form.startDate.value,
+    endDate: form.endDate.value,
+    cost: formatCurrency(form.cost.value),
+    budget: formatCurrency(form.budget.value),
+    otherExpenses: formatCurrency(form.otherExpenses.value),
+    backdropSize: form.backdropSize.value.trim(),
+    backdropCost: formatCurrency(form.backdropCost.value),
+    contact: form.contact.value.trim(),
+    description: form.description.value.trim(),
   };
-  
-  // Simpan ke localStorage
-  const boothList = JSON.parse(localStorage.getItem("booths")) || [];
-  boothList.push(data);
-  localStorage.setItem("booths", JSON.stringify(boothList));
 
-  appendRowToTable(data);
-  this.reset();
-});
+  console.log('Data to save:', data);
 
-function appendRowToTable(data) {
-    const table = document.getElementById("boothTable").getElementsByTagName("tbody")[0];
-    const newRow = table.insertRow();
-  
-    [
-      data.booth,
-      data.size,
-      data.event,
-      data.startDate,
-      data.endDate,
-      data.cost,
-      data.budget,
-      data.contact,
-      data.backdrop,
-      data.notes
-    ].forEach(value => {
-      const cell = newRow.insertCell();
-      cell.textContent = value;
-    });
-  
-    // Tambahkan Event ke dropdown jika belum ada
-    addEventToFilter(data.event);
-  }  
-
-  function loadBooths() {
-    const boothList = JSON.parse(localStorage.getItem("booths")) || [];
-    boothList.forEach(data => {
-      appendRowToTable(data);
-      addEventToFilter(data.event);
-    });
+  if (editingIndex !== null) {
+    booths[editingIndex] = data;
+    editingIndex = null;
+  } else {
+    booths.push(data);
   }
-  
-function addEventToFilter(eventName) {
-    const filter = document.getElementById("filterEvent");
-  
-    // Cek apakah event sudah ada di dropdown
-    const exists = Array.from(filter.options).some(option => option.value === eventName);
-    if (!exists) {
-      const option = document.createElement("option");
-      option.value = eventName;
-      option.textContent = eventName;
-      filter.appendChild(option);
-    }
-  }  
 
-document.getElementById("filterEvent").addEventListener("change", function () {
-  const filter = this.value;
-  const rows = document.querySelectorAll("#boothTable tbody tr");
-
-  rows.forEach(row => {
-    const eventName = row.cells[2].textContent;
-    row.style.display = !filter || eventName === filter ? "" : "none";
-  });
+  saveAndRender();
+  form.reset();
 });
 
-// Saat halaman pertama kali dibuka, muat data dari localStorage
-window.addEventListener("load", loadBooths);
+function formatCurrency(value) {
+  if (!value || isNaN(value)) return "Rp 0";
+  return "Rp " + parseInt(value).toLocaleString("id-ID");
+}
 
-document.getElementById("clearData").addEventListener("click", function () {
-    const confirmDelete = confirm("Yakin ingin menghapus semua data?");
-    if (confirmDelete) {
-      localStorage.removeItem("booths");
-      const tbody = document.querySelector("#boothTable tbody");
-      tbody.innerHTML = "";
-    }
+function saveAndRender() {
+  localStorage.setItem('booths', JSON.stringify(booths));
+  renderTable();
+  updateEventFilter();
+}
+
+function renderTable() {
+  tableBody.innerHTML = "";
+
+  const filtered = eventFilter.value
+    ? booths.filter(b => b.eventName === eventFilter.value)
+    : booths;
+
+  filtered.forEach((b, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${b.booth}</td>
+      <td>${b.boothType}</td>
+      <td>${b.boothSize}</td>
+      <td>${b.eventName}</td>
+      <td>${b.startDate}</td>
+      <td>${b.endDate}</td>
+      <td>${b.cost}</td>
+      <td>${b.budget}</td>
+      <td>${b.otherExpenses}</td>
+      <td>${b.backdropSize}</td>
+      <td>${b.backdropCost}</td>
+      <td>${b.contact}</td>
+      <td>${b.description}</td>
+      <td>
+        <button onclick="editBooth(${index})">Edit</button>
+        <button onclick="deleteBooth(${index})">Delete</button>
+      </td>
+    `;
+    tableBody.appendChild(row);
   });
-  
+}
+
+function editBooth(index) {
+  const b = booths[index];
+  form.booth.value = b.booth;
+  form.boothType.value = b.boothType;
+  form.boothSize.value = b.boothSize;
+  form.eventName.value = b.eventName;
+  form.startDate.value = b.startDate;
+  form.endDate.value = b.endDate;
+  form.cost.value = b.cost.replace(/[^\d]/g, '');
+  form.budget.value = b.budget.replace(/[^\d]/g, '');
+  form.otherExpenses.value = b.otherExpenses.replace(/[^\d]/g, '');
+  form.backdropSize.value = b.backdropSize;
+  form.backdropCost.value = b.backdropCost.replace(/[^\d]/g, '');
+  form.contact.value = b.contact;
+  form.description.value = b.description;
+  editingIndex = index;
+}
+
+function deleteBooth(index) {
+  if (confirm("Yakin ingin menghapus data booth ini?")) {
+    booths.splice(index, 1);
+    saveAndRender();
+  }
+}
+
+function updateEventFilter() {
+  const events = [...new Set(booths.map(b => b.eventName))];
+  eventFilter.innerHTML = `<option value="">Semua Event</option>`;
+  events.forEach(e => {
+    const option = document.createElement("option");
+    option.value = e;
+    option.textContent = e;
+    eventFilter.appendChild(option);
+  });
+}
+
+eventFilter.addEventListener('change', renderTable);
+
+// Initial render
+saveAndRender();
